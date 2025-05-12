@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Strength Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      width: 300px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    #strengthBar {
+      height: 10px;
+      width: 100%;
+      background-color: #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    #strengthBar > div {
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    #rules {
+      text-align: left;
+      font-size: 14px;
+    }
+
+    #rules li {
+      margin-bottom: 5px;
+    }
+
+    .met {
+      color: green;
+    }
+
+    .not-met {
+      color: red;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+
+    /* Show/Hide Password Button */
+    #togglePassword {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    #togglePassword img {
+      width: 20px;
+      height: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Password Strength Checker</h2>
+    <div style="position: relative;">
+      <input type="password" id="password" placeholder="Enter password" />
+      <button id="togglePassword">
+        <img src="https://img.icons8.com/ios-filled/50/000000/visible.png" alt="eye-icon" />
+      </button>
+    </div>
+    
+    <div id="strengthBar">
+      <div id="bar" style="background-color: red;"></div>
+    </div>
+    
+    <ul id="rules">
+      <li id="length" class="not-met">At least 8 characters</li>
+      <li id="number" class="not-met">Contains a number</li>
+      <li id="symbol" class="not-met">Contains a special character</li>
+    </ul>
+
+    <button id="submitBtn" disabled>Submit</button>
+  </div>
+
+  <script>
+    const passwordInput = document.getElementById("password");
+    const togglePasswordBtn = document.getElementById("togglePassword");
+    const bar = document.getElementById("bar");
+    const lengthRule = document.getElementById("length");
+    const numberRule = document.getElementById("number");
+    const symbolRule = document.getElementById("symbol");
+    const submitBtn = document.getElementById("submitBtn");
+
+    // Toggle password visibility
+    togglePasswordBtn.addEventListener("click", () => {
+      const type = passwordInput.type === "password" ? "text" : "password";
+      passwordInput.type = type;
+      togglePasswordBtn.querySelector("img").src = type === "password" 
+        ? "https://img.icons8.com/ios-filled/50/000000/visible.png" 
+        : "https://img.icons8.com/ios-filled/50/000000/invisible.png";
+    });
+
+    passwordInput.addEventListener("input", () => {
+      const password = passwordInput.value;
+      let score = 0;
+
+      // Check length
+      if (password.length >= 8) {
+        lengthRule.className = "met";
+        score++;
+      } else {
+        lengthRule.className = "not-met";
+      }
+
+      // Check for number
+      if (/\d/.test(password)) {
+        numberRule.className = "met";
+        score++;
+      } else {
+        numberRule.className = "not-met";
+      }
+
+      // Check for symbol
+      if (/[^A-Za-z0-9]/.test(password)) {
+        symbolRule.className = "met";
+        score++;
+      } else {
+        symbolRule.className = "not-met";
+      }
+
+      // Update progress bar
+      let width = (score / 3) * 100;
+      bar.style.width = width + "%";
+
+      if (score === 1) {
+        bar.style.backgroundColor = "red";
+      } else if (score === 2) {
+        bar.style.backgroundColor = "orange";
+      } else if (score === 3) {
+        bar.style.backgroundColor = "green";
+      }
+
+      // Enable button only if all rules are met
+      submitBtn.disabled = score < 3;
+    });
+  </script>
+
+</body>
+</html>
