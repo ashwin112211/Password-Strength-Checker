@@ -1,0 +1,86 @@
+ body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      width: 300px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    #strengthBar {
+      height: 10px;
+      width: 100%;
+      background-color: #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    #strengthBar > div {
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    #rules {
+      text-align: left;
+      font-size: 14px;
+    }
+
+    #rules li {
+      margin-bottom: 5px;
+    }
+
+    .met {
+      color: green;
+    }
+
+    .not-met {
+      color: red;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+
+    /* Show/Hide Password Button */
+    #togglePassword {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    #togglePassword img {
+      width: 20px;
+      height: 20px;
+    }
